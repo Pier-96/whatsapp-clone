@@ -1,8 +1,9 @@
 import { Avatar } from '@material-ui/core';
 import React, { useEffect, useState } from 'react';
 import './SidebarChat.css';
+import db from "./firebase";
 
-function SidebarChat({ addNewChat }) {
+function SidebarChat({ id, name, addNewChat }) {
   const [seed, setSeed] = useState('');
   useEffect(() => {
     setSeed(Math.floor(Math.random() * 500))
@@ -13,6 +14,9 @@ function SidebarChat({ addNewChat }) {
 
     if (roomName) {
       // do something...
+      db.collection('rooms').add({
+        name: roomName,
+      });
     }
   };
 
@@ -20,8 +24,8 @@ function SidebarChat({ addNewChat }) {
     <div className="sidebarChat">
       <Avatar src={`https://cdn2.thecatapi.com/images/${seed}.jpg`}/>
       <div className="sidebarChat__info">
-        <h2>room name</h2>
-        <p>last message</p>
+        <h2>{name}</h2>
+        <p>Last message</p>
       </div>
     </div>
   ): (
